@@ -74,7 +74,5 @@ mkdir build/Payload
 cp -R "$APP" build/Payload/
 ( cd build && zip -qry "$OUT" Payload )
 rm -rf build/Payload
-echo "Unsigned build: $OUT"
-echo "Sideload it, open it with JIT enabled by your sideloader (or a tool like StikDebug),"
-echo "then add your application in the app and start it."
+echo "Unsigned build created successfully."
 
