@@ -1,4 +1,4 @@
-#!/bin/bash
+﻿#!/bin/bash
 # The unsigned .ipa a sideloader signs with your Apple ID (ad hoc signed with
 # no team, only to declare the memory capabilities it should request).
 # usage: tools/package_ipa.sh [output.ipa]        (default: Tolkara-unsigned.ipa)
@@ -21,7 +21,7 @@ tools/generate.sh
 # Its one way to run code, chosen already.
 # By target: schemes need a destination the SDK alone lacks.
 xcodebuild -project Tolkara.xcodeproj -target TolkaraDiagnostics -configuration Release \
-    -sdk iphoneos -arch arm64 SYMROOT=build/unsigned NATIVE_GUEST_SHIMS=GENERIC TOLKARA_MODE=external-jit \
+    -sdk iphoneos -arch arm64 SYMROOT="$PWD/build/unsigned" NATIVE_GUEST_SHIMS=GENERIC TOLKARA_MODE=external-jit \
     TOLKARA_SYSTEM_ROOTS="${TOLKARA_SYSTEM_ROOTS:-YES}" \
     INFOPLIST_KEY_CFBundleDisplayName=Wolkara \
     CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY="" \
@@ -77,3 +77,4 @@ rm -rf build/Payload
 echo "Unsigned build: $OUT"
 echo "Sideload it, open it with JIT enabled by your sideloader (or a tool like StikDebug),"
 echo "then add your application in the app and start it."
+
