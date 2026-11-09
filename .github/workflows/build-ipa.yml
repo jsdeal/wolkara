@@ -32,7 +32,7 @@ jobs:
           xcodebuild -version
           python3 --version
 
-            - name: Install XcodeGen
+      - name: Install XcodeGen
         run: brew install xcodegen
 
       - name: Generate project and resolve Swift packages
@@ -53,3 +53,4 @@ jobs:
             logs/
           retention-days: 7
           if-no-files-found: warn
+
