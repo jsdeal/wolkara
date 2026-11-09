@@ -32,8 +32,13 @@ jobs:
           xcodebuild -version
           python3 --version
 
-      - name: Install XcodeGen
+            - name: Install XcodeGen
         run: brew install xcodegen
+
+      - name: Generate project and resolve Swift packages
+        run: |
+          tools/generate.sh
+          xcodebuild -resolvePackageDependencies -project Tolkara.xcodeproj
 
       - name: Build External JIT IPA
         run: TOLKARA_SYSTEM_ROOTS=YES tools/package_ipa.sh Tolkara-unsigned.ipa
