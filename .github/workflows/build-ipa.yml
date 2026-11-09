@@ -1,0 +1,50 @@
+﻿name: Build Wolkara External JIT IPA
+
+on:
+  workflow_dispatch:
+    inputs:
+      source_ref:
+        description: "Branch, tag, or commit to build"
+        required: true
+        default: "main"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: wolkara-ipa-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  build:
+    name: Build unsigned iOS IPA
+    runs-on: macos-26
+
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v5
+        with:
+          ref: ${{ inputs.source_ref }}
+          fetch-depth: 1
+
+      - name: Show build environment
+        run: |
+          xcodebuild -version
+          python3 --version
+
+      - name: Install XcodeGen
+        run: brew install xcodegen
+
+      - name: Build External JIT IPA
+        run: TOLKARA_SYSTEM_ROOTS=YES tools/package_ipa.sh Tolkara-unsigned.ipa
+
+      - name: Upload IPA and build logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Wolkara-External-JIT-IPA
+          path: |
+            Tolkara-unsigned.ipa
+            logs/
+          retention-days: 7
+          if-no-files-found: warn
