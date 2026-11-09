@@ -27,7 +27,6 @@ xcodebuild -project Tolkara.xcodeproj -target TolkaraDiagnostics -configuration 
     CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY="" \
     build > "$LOG" 2>&1 \
     || { grep -E "error:" "$LOG" | head -20; echo "BUILD FAILED -> $LOG"; exit 1; }
-
 APP=build/unsigned/Release-iphoneos/TolkaraDiagnostics.app
 [ -d "$APP" ] || { echo "Build did not produce $APP -> $LOG"; exit 1; }
 # Asked to leave the root certificates out: make sure none were packaged.
@@ -67,7 +66,6 @@ for bundle in "$APP" "$APP"/PlugIns/*.appex; do
         esac
     fi
 done
-
 # An .ipa is a zip with Payload/.
 rm -rf build/Payload "$OUT"
 mkdir build/Payload
@@ -75,4 +73,4 @@ cp -R "$APP" build/Payload/
 ( cd build && zip -qry "$OUT" Payload )
 rm -rf build/Payload
 echo "Unsigned build created successfully."
-
+exit 0
