@@ -1,4 +1,4 @@
-﻿#!/bin/bash
+#!/bin/bash
 # The unsigned .ipa a sideloader signs with your Apple ID (ad hoc signed with
 # no team, only to declare the memory capabilities it should request).
 # usage: tools/package_ipa.sh [output.ipa]        (default: Tolkara-unsigned.ipa)
